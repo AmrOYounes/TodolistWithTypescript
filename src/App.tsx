@@ -1,58 +1,30 @@
-import React, { useState } from "react";
-import { TodoListItem } from "./Components/Todolist/TodoListItem";
-import { AddToDo } from "./Components/Todolist/AddToDo";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { TodoListItem } from "./Components/TodolistItem/TodoListItem";
+import { AddToDo } from "./Components/toDoListForm/AddToDo";
+import type { RootState } from "./redux/rootReducer";
+import { updateTodo } from "./redux/todos/todoActions";
 import "./App.scss";
 
-const initialTodos: Todo[] = [
-  {
-    text: "learn React hooks",
-    complete: false,
-  },
-  {
-    text: "Learn typescript",
-    complete: true,
-  },
-];
-
 function App() {
-  const [todos, setTodos] = useState(initialTodos);
+  const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todos.todos);
 
-  const toggleTodo: (selectedTodo: Todo) => void = (selectedTodo: Todo) => {
-    const newTodos = todos.map((todo) => {
-      if (todo === selectedTodo) {
-        return {
-          ...todo,
-          complete: !todo.complete,
-        };
-      }
-      return todo;
-    });
-    setTodos(newTodos);
-  };
+  useEffect(() => {
+    if (localStorage.getItem("todos")) {
+      dispatch(updateTodo());
+    }
+  }, []);
 
-  const addTodoItem: (text: string) => void = (text: string) => {
-    const newTodo = { text, complete: false };
-    setTodos([...todos, newTodo]);
-  };
-
-  const handleDeleteTodo: (selectedTodo: Todo) => void = (
-    selectedTodo: Todo
-  ) => {
-    const newTodos = todos.filter((todo) => todo !== selectedTodo);
-    setTodos(newTodos);
-  };
-
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  });
   return (
     <div className="App">
-      <AddToDo addTodoItem={addTodoItem} />
+      <AddToDo />
       <ul className="list">
-        {todos.map((todo) => (
-          <TodoListItem
-            key={todo.text}
-            todo={todo}
-            toggleTodo={toggleTodo}
-            handleDeleteTodo={handleDeleteTodo}
-          />
+        {todos.map((todo: Todo) => (
+          <TodoListItem key={todo.text} todo={todo} />
         ))}
       </ul>
     </div>

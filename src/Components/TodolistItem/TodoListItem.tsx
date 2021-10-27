@@ -1,23 +1,21 @@
 import React from "react";
 import "./todoListItem.style.scss";
+import { useDispatch } from "react-redux";
+import { deleteTodo, toggleTodo } from "../../redux/todos/todoActions";
+
 interface Props {
   todo: Todo;
-  toggleTodo: (selectedTodo: Todo) => void;
-  handleDeleteTodo: (selectedTodo: Todo) => void;
 }
 
-export const TodoListItem: React.FC<Props> = ({
-  todo,
-  toggleTodo,
-  handleDeleteTodo,
-}) => {
+export const TodoListItem: React.FC<Props> = ({ todo }) => {
+  const dispatch = useDispatch();
   return (
     <li className="list-item">
       <input
         type="checkbox"
         checked={todo.complete}
         onChange={() => {
-          toggleTodo(todo);
+          dispatch(toggleTodo(todo));
         }}
       />
       <label
@@ -25,7 +23,7 @@ export const TodoListItem: React.FC<Props> = ({
       >
         {todo.text}
       </label>
-      <button onClick={() => handleDeleteTodo(todo)}>Delete</button>
+      <button onClick={() => dispatch(deleteTodo(todo))}>Delete</button>
     </li>
   );
 };
