@@ -1,8 +1,4 @@
-import { ADD_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_TODO } from "./todoTypes";
-
-type todoState = {
-  todos: Todo[];
-};
+import { ADD_TODO, DELETE_TODO, TOGGLE_TODO, todoState } from "./todoTypes";
 
 const initialState: todoState = {
   todos: [
@@ -23,13 +19,6 @@ const todoReducer = (state: todoState = initialState, action: Action) => {
       return {
         ...state,
         todos: [...state.todos, action.payload],
-      };
-
-    case UPDATE_TODO:
-      const data = localStorage.getItem("todos");
-      return {
-        ...state,
-        todos: JSON.parse(data as string),
       };
 
     case DELETE_TODO:

@@ -3,25 +3,33 @@ import "./AddTodoForm.styles.scss";
 import { useDispatch } from "react-redux";
 import { addTodo } from "../../redux/todos/todoActions";
 
-export const AddToDo: React.FC = () => {
+const AddToDo: React.FC = () => {
   const dispatch = useDispatch();
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    const inputValue = e.target.value;
+    if (inputValue) {
+      setText(inputValue);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(addTodo({ text, complete: false }));
+    if (text) {
+      setText("");
+      dispatch(addTodo({ text, complete: false }));
+    }
   };
 
   return (
     <form className="todo-form">
-      <input type="text" onChange={handleInputChange} autoFocus />
+      <input type="text" value={text} onChange={handleInputChange} autoFocus />
       <button type="submit" onClick={handleSubmit} className="add-todo-button">
         Add Todo
       </button>
     </form>
   );
 };
+
+export default AddToDo;
