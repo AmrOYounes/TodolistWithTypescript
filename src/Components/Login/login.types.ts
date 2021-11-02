@@ -1,3 +1,5 @@
  export interface LoginTypes {
-    login: (user: string, pass: string) => void
-}
+    history: {
+        replace: ( url: string) => void
+     }
+ }
