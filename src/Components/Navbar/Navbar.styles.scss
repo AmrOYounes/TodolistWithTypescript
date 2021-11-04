@@ -1,0 +1,28 @@
+.nav {
+    width: 100vw;
+    background-color: #83b04f;
+    ul {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        .list-item-button {
+            display: flex;
+            align-items: center;
+            align-items: center;
+            button {
+                width: 8em;
+                height: 3em;
+                border-radius: 1em;
+                border: none;
+                margin: 0 2em;
+                &:hover {
+                    cursor: pointer;
+                    border: 1px solid #808080;
+                }
+            }
+        }
+        
+    }
+}

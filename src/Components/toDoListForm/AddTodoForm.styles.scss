@@ -1,0 +1,25 @@
+.todo-form {
+display: flex;
+width: 50%;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+input {
+border: 2px solid gray;
+border-radius: 5px;
+width: 50%;
+height: 3em;
+margin: 2em;
+}
+button {
+    width: 50%;
+    border-radius: 5px;
+    height: 2.5em;
+    border: none;
+    background-color: lightsteelblue;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+}
